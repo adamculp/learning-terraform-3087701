@@ -74,7 +74,9 @@ module "alb" {
     default = {
       port               = 80
       protocol           = "HTTP"
-      target_group_index = 0
+      forward = {
+        target_group_key = 0
+      }
     }
   }
 
