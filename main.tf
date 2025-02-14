@@ -55,7 +55,7 @@ module "alb" {
   #security_group_ingress_rules = module.blog_sg.
   #security_group_egress_rules = module.blog_sg.egress_rules
   
-  security_groups = module.blog_sg.security_group_id
+  security_groups = [module.blog_sg.security_group_id]
 
   # Security Group
   #security_group_ingress_rules = {
