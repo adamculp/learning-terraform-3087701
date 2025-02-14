@@ -71,7 +71,7 @@ module "alb" {
   ]
 
   listeners = {
-    http_tcp_listeners = {
+    default = {
       port               = 80
       protocol           = "HTTP"
       target_group_index = 0
