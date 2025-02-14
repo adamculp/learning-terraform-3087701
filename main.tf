@@ -14,10 +14,6 @@ data "aws_ami" "app_ami" {
   owners = ["979382823631"] # Bitnami
 }
 
-data "aws_vpc" "default" {
-  default = true
-}
-
 module "blog_vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
@@ -33,18 +29,19 @@ module "blog_vpc" {
   }
 }
 
-module "blog-asg" {
+module "blog_autoscaling" {
   source  = "terraform-aws-modules/autoscaling/aws"
   version = "8.1.0"
   
   name = "blog"
+  
   min_size = 1
   max_size = 2
 
   vpc_zone_identifier = module.blog_vpc.public_subnets
-  #target_group_arns = module.blog_alb.target_group_arns
+
   traffic_source_attachments = {
-    ex-alb = {
+    blog-alb = {
       traffic_source_identifier = "module.blog_alb.arn"
       traffic_source_type = "elbv2"
     }
@@ -71,7 +68,6 @@ module "blog_alb" {
       protocol         = "HTTP"
       port             = 80
       target_type      = "instance"
-      #target_id        = aws_instance.blog.id
     }
   }
 
@@ -93,7 +89,7 @@ module "blog_alb" {
 module "blog_sg" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "5.3.0"
-  name = "blog_new"
+  name = "blog"
 
   vpc_id      = module.blog_vpc.vpc_id
 
