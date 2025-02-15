@@ -42,7 +42,7 @@ module "blog_autoscaling" {
 
   traffic_source_attachments = {
     blog-alb = {
-      traffic_source_identifier = "module.blog_alb.target_group_key.ex-instance"
+      traffic_source_identifier = "module.blog_alb["ex-instance"].arn"
       traffic_source_type = "elbv2"
     }
   }
@@ -68,7 +68,7 @@ module "blog_alb" {
       protocol         = "HTTP"
       port             = 80
       target_type      = "instance"
-      target_id        = module.blog_autoscaling.blog.id
+      #target_id        = module.blog_autoscaling.target_id
     }
   }
 
