@@ -42,7 +42,7 @@ module "blog_autoscaling" {
 
   traffic_source_attachments = {
     blog-alb = {
-      traffic_source_identifier = "module.blog_alb.target_groups['ex-instance'].arn"
+      traffic_source_identifier = module.blog_alb.target_groups["ex-instance"].arn
       traffic_source_type = "elbv2"
     }
   }
