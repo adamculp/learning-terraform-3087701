@@ -40,8 +40,6 @@ module "blog_autoscaling" {
 
   vpc_zone_identifier = module.blog_vpc.public_subnets
 
-  create_attachment = false
-  
   traffic_source_attachments = {
     blog-alb = {
       traffic_source_identifier = module.blog_alb.target_groups["ex-instance"].arn
@@ -71,6 +69,7 @@ module "blog_alb" {
       port             = 80
       target_type      = "instance"
       #target_id        = aws_instance.blog.id
+      create_attachment = false
     }
   }
 
